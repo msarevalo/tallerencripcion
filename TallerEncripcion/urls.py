@@ -15,13 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from TallerEncripcion.views import menu,modularform,punto1, punto2, punto3
+from TallerEncripcion.views import menu, modularform, punto1, automataform, punto2, imagenesform, punto3
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('menu/', menu),
     path('modular/', modularform),
     path('modular/solucion/', punto1),
-    path('automata/<secreta>/<int:iteraciones>/<int:celula>/<palabra>', punto2),
-    path('imagenes', punto3)
+    path('automata/', automataform),
+    path('automata/solucion/', punto2),
+    path('imagenes/', imagenesform),
+    path('imagenes/solucion/', punto3),
 ]

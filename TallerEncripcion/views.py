@@ -32,10 +32,10 @@ def punto1(request):
     palabra=str(request.GET['cadena'])
     prueba=modular(corrimiento, palabra)
     
-    plantilla=open("plantillas/plantilla.html")
+    plantilla=open("plantillas/punto1.html")
     plt=Template(plantilla.read())
     plantilla.close
-    ctx=Context({'prueba':prueba})
+    ctx=Context({'original':palabra,'corrimiento':corrimiento, 'respuesta':prueba})
 
     probando=plt.render(ctx)
     return HttpResponse(probando)
@@ -52,14 +52,27 @@ def modular(corrimiento, palabra):
     
     return encriptada
 
-def punto2(request,secreta,iteraciones,celula,palabra):
+def automataform(request):
+    plantilla=open("plantillas/punto2.html")
+    plt=Template(plantilla.read())
+    plantilla.close
+    ctx=Context({})
+
+    probando=plt.render(ctx)
+    return HttpResponse(probando)
+
+def punto2(request):
+    secreta=str(request.GET['secreta'])
+    iteraciones=int(str(request.GET['iteraciones']))
+    celula=int(str(request.GET['celula']))
+    palabra=str(request.GET['cadena'])
     prueba=automata2(secreta,iteraciones,celula,palabra)
 
-    plantilla=open("plantillas/plantilla.html")
+    plantilla=open("plantillas/punto2.html")
     plt=Template(plantilla.read())
     plantilla.close
 
-    ctx=Context({'prueba':prueba})
+    ctx=Context({'original':palabra,'iteraciones':iteraciones, 'celula':celula, 'secreta':secreta, 'respuesta':prueba})
 
     probando=plt.render(ctx)
     return HttpResponse(probando)
@@ -150,23 +163,36 @@ def automata2(secreta,iteraciones,celula,palabra):
 
     return salida
 
-def punto3(request):
-    prueba=imagenes()
-    plantilla=open("plantillas/plantilla.html")
+def imagenesform(request):
+    plantilla=open("plantillas/punto3.html")
     plt=Template(plantilla.read())
     plantilla.close
-    ctx=Context({'prueba':prueba})
+    ctx=Context({})
 
     probando=plt.render(ctx)
     return HttpResponse(probando)
 
-def imagenes():
-    ruta="imagenes/prueba2.jpg"
+def punto3(request):
+    nombre=str(request.GET['nombre'])
+    l1=int(str(request.GET['l1']))
+    l2=int(str(request.GET['l2']))
+    l3=int(str(request.GET['l3']))
+    prueba=imagenes(nombre, l1, l2,l3)
+    plantilla=open("plantillas/punto3.html")
+    plt=Template(plantilla.read())
+    plantilla.close
+    ctx=Context({'original':nombre,'respuesta':prueba})
+
+    probando=plt.render(ctx)
+    return HttpResponse(probando)
+
+def imagenes(nombre, l1, l2, l3):
+    ruta="imagenes/"+nombre
     img = cv2.imread(ruta, cv2.IMREAD_GRAYSCALE)
     
-    l1=0
-    l2=0
-    l3=0
+    l1=l1
+    l2=l2
+    l3=l3
     cifrado=[]
     ini1=ini2=inj1=inj2=s1=s2=s3=s4=0
 
@@ -204,5 +230,6 @@ def imagenes():
     salida = im.fromarray(cifrado)
     fecha_actual=datetime.datetime.now()
     fecha_actual= str(format(fecha_actual.day))+str(format(fecha_actual.month))+str(format(fecha_actual.year))+str(format(fecha_actual.hour))+str(format(fecha_actual.minute))+ str(format(fecha_actual.second))
-    salida.save('imagenes_encriptadas/'+str(fecha_actual)+'.png')
+    fecha_actual = str(fecha_actual) + ".png"
+    salida.save('imagenes_encriptadas/'+str(fecha_actual))
     return fecha_actual

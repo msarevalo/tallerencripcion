@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="es" dir="ltr">
 <head>
     <title>Taller de Encripcion</title>
-    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="utf-8">
     <!-- Estilos -->
     <style>
         
@@ -281,16 +281,51 @@ input:focus ~ .highlight {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../js/script.js" type="application/javascript"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CFGKZ8VPF5"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CFGKZ8VPF5"></script>
 </head>
 <body>
+<div style="margin-left: 40%; margin-top: 50px">
+    {% if respuesta %}
+      <a href="/imagenes" class="btn w-M br-0 stl-3" style="cursor: pointer;">Limpiar</a>
+    {% else %} 
+    <form action="solucion/" method="GET" id="encriptar">
+        <div class="group">
+          <input type="number" id="l1" name="l1" required min="0" max="36" {% if respuesta %}readonly{% endif %}>
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label>Lamnda 1</label>
+        </div>
+        <div class="group">
+          <input type="number" id="l2" name="l2" required min="0" max="36" {% if respuesta %}readonly{% endif %}>
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label>Lamnda 2</label>
+      </div>
+      <div class="group">
+          <input type="number" id="l3" name="l3" required min="0" max="36" {% if respuesta %}readonly{% endif %}>
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label>Lamnda 3</label>
+      </div>
+      <div class="group">
+        <input type="text" id="nombre" name="nombre" required {% if respuesta %}readonly{% endif %}>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label>Nombre Imagen</label>
+      </div>
+        <button type="submit" class="btn w-M br-0 stl-3" style="cursor:pointer">Encriptar</button>
+      {% endif %}
+    </form>
+</div>
 <center>
-    <div style="margin-top: 200px">
-        <a href="../modular/" class="btn w-M br-0 stl-3" style="text-decoration: none">Aritmetica Modular</a>
-        <a href="../automata/" class="btn w-M br-0 stl-3" style="text-decoration: none">Automatas Celulares</a>
-        <a href="../imagenes/" class="btn w-M br-0 stl-3" style="text-decoration: none">Encripcion de Imagenes</a>
-        <!--<p id="prueba" style="text-transform: uppercase"></p>--> 
-    </div>
+<div>
+  {% if respuesta %}
+  <h2>Original:</h2>
+  <img src="../imagenes/{{original}}" width="500">
+  <h2>Encriptada:</h2>
+  <img src="../imagenes_encriptadas/{{respuesta}}" width="500">
+  {% endif %}
+</div>
 </center>
 </body>
 </html>

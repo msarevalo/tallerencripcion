@@ -288,19 +288,31 @@ input:focus ~ .highlight {
     <form action="solucion/" enctype="multipart/form-data" method="GET" id="encriptar">
         
         <div class="group">
-            <input type="number" id="solicitud" name="solicitud" required min="0" max="36">
+            <input type="number" id="solicitud" name="solicitud" required min="0" max="36" {% if respuesta %}readonly{% endif %}>
             <span class="highlight"></span>
             <span class="bar"></span>
             <label>Entrada</label>
         </div>
         <div class="group">      
-            <input type="text" pattern="[a-z&ntilde;]+" title="Valores unicamente alfanumericos" id="cadena" name="cadena" required>
+            <input type="text" pattern="[a-z&ntilde;]+" title="Valores unicamente alfanumericos" id="cadena" name="cadena" required {% if respuesta %}readonly{% endif %}>
             <span class="highlight"></span>
             <span class="bar"></span>
             <label>Cadena</label>
         </div>
+        {% if respuesta %}
+        <a href="/modular" class="btn w-M br-0 stl-3" style="cursor: pointer;">Limpiar</a>
+        {% else %}
         <button type="submit" class="btn w-M br-0 stl-3" style="cursor:pointer">Encriptar</button>
+        {% endif %}
     </form>
 </div>
+<center>
+<div>
+  {% if respuesta %}
+  <h2>La palabra: <u>{{original}}</u> encriptada con corrimiento <u>{{corrimiento}}</u> es:</h2>
+  <h2>{% for i in respuesta %} {{i}} {% endfor %}</h2>
+  {% endif %}
+</div>
+</center>
 </body>
 </html>

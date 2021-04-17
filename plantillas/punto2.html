@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="es" dir="ltr">
 <head>
     <title>Taller de Encripcion</title>
-    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="utf-8">
     <!-- Estilos -->
     <style>
         
@@ -281,16 +281,57 @@ input:focus ~ .highlight {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../js/script.js" type="application/javascript"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CFGKZ8VPF5"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CFGKZ8VPF5"></script>
 </head>
 <body>
+<div style="margin-left: 40%; margin-top: 25px">
+    <form action="solucion/" enctype="multipart/form-data" method="GET" id="encriptar">
+      <div class="group">      
+        <input type="text" pattern="[a-z&ntilde;]+" onchange="largo()" id="secreta" name="secreta" required {% if respuesta %}readonly{% endif %}>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label>Palabra secreta</label>
+      </div>
+      <div class="group">
+        <input type="number" id="iteraciones" name="iteraciones" required min="0" {% if respuesta %}readonly{% endif %}>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label>Tiempo</label>
+      </div>
+      <div class="group">
+        <input type="number" id="celula" name="celula" required min="0" {% if respuesta %}readonly{% endif %}>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label># Celula</label>
+      </div>
+        <div class="group">      
+          <input type="text" pattern="[a-z&ntilde;]+" title="Valores unicamente alfanumericos" id="cadena" name="cadena" required {% if respuesta %}readonly{% endif %}>
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label>Cadena a encriptar</label>
+        </div>
+        {% if respuesta %}
+        <a href="/automata" class="btn w-M br-0 stl-3" style="cursor: pointer;">Limpiar</a>
+        {% else %}
+        <button type="submit" class="btn w-M br-0 stl-3" style="cursor:pointer">Encriptar</button>
+        {% endif %}
+    </form>
+    <script>
+      function largo(){
+        texto=document.getElementById("secreta").value;
+        var largo=texto.length;
+        var largo= (largo*5)-1;
+        document.getElementById("celula").max = largo;
+      }
+    </script>
+</div>
 <center>
-    <div style="margin-top: 200px">
-        <a href="../modular/" class="btn w-M br-0 stl-3" style="text-decoration: none">Aritmetica Modular</a>
-        <a href="../automata/" class="btn w-M br-0 stl-3" style="text-decoration: none">Automatas Celulares</a>
-        <a href="../imagenes/" class="btn w-M br-0 stl-3" style="text-decoration: none">Encripcion de Imagenes</a>
-        <!--<p id="prueba" style="text-transform: uppercase"></p>--> 
-    </div>
+<div>
+  {% if respuesta %}
+  <h2>La palabra: <u>{{original}}</u> encriptada con la palabra secreta <u>{{secreta}}</u><br> apartir del tiempo <u>{{iteraciones}}</u> utilizando la celula <u>{{celula}}</u> es:</h2>
+  <h2>{% for i in respuesta %} {{i}} {% endfor %}</h2>
+  {% endif %}
+</div>
 </center>
 </body>
 </html>
